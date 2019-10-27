@@ -29,6 +29,7 @@ var game = new Phaser.Game(config);
 
 var player;
 var sfx;
+var audioStart = false;
 /*
 var stars;
 var bombs;
@@ -69,9 +70,10 @@ function create ()
 
 function update ()
 {
-    if(cursors.left.isDown) {
+    if(!audioStart && cursors.left.isDown) {
         sfx.play();
     }
+
     if (cursors.left.isDown)
     {
         player.setVelocityX(-jugabilidad.player.movimientoY);
