@@ -1,12 +1,51 @@
-var socket = io.connect('http://localhost:8080/player', { 'forceNew': true });
+var otro = document.getElementById('losiento');
+var manda = document.getElementById('manda-juego');
+var juega = document.getElementById('juega');
+var code = document.getElementById('code');
+var displayId = document.getElementById('id');
 
-socket.on('messages', function(data) {
-  console.log(data);
-  //render(data);
-})
+var id = -1;
 
-function addMessage(e) {
+function clearUI(){
+  manda.style.display = "none";
+  juega.style.display = "none";
+  losiento.style.display = "none";
+}
 
-  socket.emit('new-message', 'Info a enviar: subir');
-  return false;
+clearUI();
+losiento.style.display = "initial";
+
+var socket = io.connect('http://localhost:18080', { 'forceNew': true });
+
+socket.on('introcodigo', function(data) {
+  clearUI();
+  manda.style.display = "initial";
+});
+
+socket.on('id', function(data) {
+  id = data;
+  displayId.innerHTML = id;
+});
+
+socket.on('juegas', function(data) {
+  clearUI();
+  juega.style.display = "initial";
+});
+
+socket.on('nojuegas', function(data) {
+  clearUI();
+  losiento.style.display = "initial";
+});
+
+function enviaCodigo() {
+  socket.emit('intentojugar', {
+    'id': id,
+    'code': code.value
+  });
+}
+
+function enviaComando(comando) {
+  socket.emit(comando, {
+    'id': id
+  });
 }
