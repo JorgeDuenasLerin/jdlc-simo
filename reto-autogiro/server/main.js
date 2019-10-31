@@ -54,9 +54,10 @@ ioJugadores.on('connection', function(socket) {
     }
   });
 
-  socket.on('subir', function(data) {
+  socket.on('comando', function(data) {
     // TODO: VErificar id
-    ioPrincipal.emit('subir');
+    console.log(data);
+    ioPrincipal.emit(data.comando);
   });
 });
 
