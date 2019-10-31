@@ -32,8 +32,17 @@ class Player  {
     this.player.body.setEnable(true);
   }
 
+  setIzquierda() {
+    this.izquierda = true;
+    console.log(this.izquierda);
+  }
+
   setSubir() {
     this.subir = true;
+  }
+
+  setDerecha() {
+    this.derecha = true;
   }
 
   update(){
@@ -42,10 +51,22 @@ class Player  {
       this.orquestador.setFinJuego();
     }
 
+    if (this.izquierda)
+    {
+      this.izquierda = false; 
+      this.player.setVelocityX(-10);        
+    }
+
     if (this.subir)
     {
         this.subir = false;
         this.player.setVelocityY(-jugabilidad.player.impulso);
+    }
+
+    if (this.derecha)
+    {
+        this.derecha = false;
+        this.player.setVelocityX(10);
     }
 
     /*
