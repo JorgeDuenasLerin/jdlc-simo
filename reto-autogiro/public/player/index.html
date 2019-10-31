@@ -3,33 +3,41 @@
 <head>
   <meta charset="utf-8">
   <title>Reto Autogiro</title>
-
+  <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
-  <h1>Juan de la cierva id:<span id="id">-1</span></h1>
-  <div id="manda-juego">
-    <h3>Intenta jugar</h3>
-    <form>
-      <input id="code" type="text" value="">
-      <input type="button" value="Enviar!" onclick="enviaCodigo()">
-    </form>
-  </div>
-  <br>
-  <div id="juega">
-    <h3>Juega!!</h3>
-    <form action="" onsubmit="return intentaCodigo(this)">
-      <input type="button" value="Izq">
-      <input type="button" value="Sube" onclick="enviaComando('subir')">
-      <input type="button" value="Der">
-    </form>
-  </div>
-  <br>
-  <div id="losiento">
-    <h1>
-      Otro está jugando
-    </h1>
-  </div>
+  <main>
+    <header>
+      <img src="assets/logo.png" alt="logoIES">
+      <h1>IES Juan de la Cierva</h1>
+      <img src="assets/logoCM.jpg" alt="logoCM">
+    </header>
+    <section id="manda-juego">
+      <h2>id:<span id="id">-1</span></h2>
+      <br>
+      <h3>Intenta jugar</h3>
+      <label for="">
+        <input type="text" focus>
+        <button id=enviar>Enviar</button>
+      </label>
+   </section>
+
+    <section id="juega">      
+      <h3>¡¡Juega!!</h3>
+      <div id="control">
+        <button id=izquierda>&#11164;</button>
+        <button id=subir>&#11165;</button>
+        <button id=derecha>&#11166;</button>
+      </div>
+    </section>
+
+    <section id="losiento">
+      <h1>
+        Otro está jugando
+      </h1>
+    </section>
+  </main>
   <script src="/socket.io/socket.io.js"></script>
-  <script src="main.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
