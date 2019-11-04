@@ -1,0 +1,132 @@
+
+/* Reset */
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+/* padding */
+html, body, ul[class], ol[class] {
+  padding: 0;
+  margin: 0;
+}
+
+/* Margen a 0 */
+h1,h2,h3,h4, p, li, figure, figcaption { 
+    margin: 0;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+html {font-size: 1em;}
+
+body {
+  min-height: 100vh;
+  line-height: 1.5;
+  font-family: system-ui, sans-serif;
+}    
+
+/* flow */
+section {
+  margin-top: 2rem;
+}
+
+button, input {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+  overflow: visible;
+  cursor: pointer;
+}
+
+/* iOS y Safari */
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+    -webkit-appearance: button;
+}    
+
+/* Página */
+
+body {
+  background-color: #f1f1f1; /* color fondo logo*/
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2em; 
+}
+
+main > header  {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+main > header > img {
+  width: 80px;
+}
+
+main > header > h1 {
+  margin: 1em 0.5rem;
+}
+
+button {
+  border: 0;
+  font-family: system-ui, sans-serif;
+  user-select: none;
+}
+
+#enviar {
+  border-radius: 5px;
+  padding: 0.25rem 0.5rem;
+  margin: 0.25rem;
+  
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  
+  background-color: #5cbcf6;
+  box-shadow: 0px 5px #49a7df;
+  font-weight: 700;
+  position: relative;
+}
+
+#enviar::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  transition: all 0.3s;
+}
+
+#enviar:hover {
+  box-shadow: 0 3px #49a7df;
+  top: 2px;  
+}
+
+#control > button {
+  font-size: 4rem;
+  background-color: transparent;
+  transition: transform 200ms, color 200ms;
+}
+
+#control :nth-child(odd) {
+  padding-top: 3rem;
+}
+
+#control :nth-child(2) {
+  vertical-align: top;
+}
+
+
+#control > button:focus, #enviar { outline:0; }
+#control > button:active { transform: scale(0.85); color:#666; }
+
+h1, h3 {
+  text-align: center;
+}

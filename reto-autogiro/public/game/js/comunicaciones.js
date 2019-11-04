@@ -11,13 +11,21 @@ class Comunicaciones  {
     this.socket = io.connect('http://localhost:' + PORT, { 'forceNew': true });
 
     this.socket.on('entrajugador', function(data) {
-        console.log('Comienza juego!!');
-        orquestador.setArranqueJuego();
+      console.log('¡¡Comienza el juego!!');
+      orquestador.setArranqueJuego();
+    });
+
+    this.socket.on('izquierda', function(data) {
+      player.setIzquierda();
     });
 
     this.socket.on('subir', function(data) {
       player.setSubir();
     });
+    
+    this.socket.on('derecha', function(data) {
+      player.setDerecha();
+    });    
   }
 
   pedirJugadores(code) {
