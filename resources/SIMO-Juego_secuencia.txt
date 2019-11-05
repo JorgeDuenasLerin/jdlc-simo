@@ -1,0 +1,10 @@
+Juego-->Server: pidejuegador
+Server-->Jugador: introcodigo
+Jugador-->Server: intentojugar
+Server-->Jugador: nojuegas
+Server-->Jugador: juegas
+note over Jugador:Solo uno juega
+Jugador-->Server: comando
+Server-->Juego: subir | izquierda | derecha
+Juego-->Server: gameover: puntos
+Server-->Juego: juegonuevo ranking

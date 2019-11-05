@@ -25,7 +25,13 @@ class Player  {
 
   reset(){
     this.life = 1000;
+    //TODO: Hacer sistema de puntos
+    this.puntos = Math.floor(Math.random() * 1000);
     this.player.setPosition(100,100);
+  }
+
+  getPuntos(){
+    return this.puntos;
   }
 
   play(){
@@ -51,6 +57,7 @@ class Player  {
   update(){
     this.life--;
     if(this.life == 0) {
+
       this.orquestador.setFinJuego();
     }
 

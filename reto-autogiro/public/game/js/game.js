@@ -25,6 +25,7 @@ var comm;
 
 
 var player;
+var ui;
 var controlPlayer;
 var sfx;
 var audioStart = false;
@@ -52,6 +53,9 @@ function preload ()
     player = new Player(this);
     player.preload();
 
+    ui = new UI(this);
+    ui.preload();
+
     comm = new Comunicaciones(orquestador);
     comm.connect();
     orquestador.setComunicaciones(comm);
@@ -65,7 +69,7 @@ function create ()
 
     orquestador.create();
     player.create();
-
+    ui.create();
 
 
 

@@ -43,10 +43,19 @@ socket.on('nojuegas', function(data) {
   losiento.style.display = "initial";
 });
 
+socket.on('damenombre', function(data) {
+  clearUI();
+  juega.style.display = "initial";
+});
+
 function enviarCodigo(evt) {
+  // TODO: No depender de HTML
+  var nombre = this.parentNode.children[0].value;
+  var codigo = this.parentNode.children[2].value;
   socket.emit('intentojugar', {
     'id': id,
-    'code': this.parentNode.value
+    'code': codigo,
+    'nombre': nombre
   });
 }
 
@@ -54,7 +63,7 @@ function enviarComando(evt) {
   if(evt.target.tagName !== 'BUTTON') return;
 
   socket.emit('comando', {
-    comando: evt.target.id, 
+    comando: evt.target.id,
     'id': id
   });
 }

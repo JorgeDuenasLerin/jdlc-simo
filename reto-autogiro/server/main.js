@@ -24,9 +24,19 @@ ioJuego.on('connection', function(socket) {
 
     ioJugadores.sockets.emit('introcodigo', '');
     console.log('Pide código a jugadores');
-    //ioPrincipal.send('algo');
-    //io.sockets.emit('messages', messages);
   });
+
+  socket.on('gameover', function(data) {
+    console.log('Conseguidos puntos:' + data);
+    console.log(nombre);
+    console.log('fin partida');
+
+    ioPrincipal.emit('juegonuevo', [ {nombre: nombre, puntos: data} ]);
+  });
+
+  ioPrincipal.emit('juegonuevo', [
+    {'p1':1}, {'p2':2}
+  ]);
 });
 
 serverJuego.listen(30000, function() {
@@ -35,6 +45,7 @@ serverJuego.listen(30000, function() {
 
 
 var jugadorActual;
+var nombre;
 
 ioJugadores.on('connection', function(socket) {
 
@@ -43,13 +54,14 @@ ioJugadores.on('connection', function(socket) {
   socket.emit('id', socket.id);
 
   socket.on('intentojugar', function(data) {
-    console.log('JUGADORES => Recibido intento id:' + data.id + ' code: ' + data.code);
-    if(data.code != code) {
+    console.log('JUGADORES => Recibido intento\nid:' + data.id + '\ncode: ' + data.code + '\nnombre: ' + data.nombre);
+    if(data.code == code) {
       code = -1;
       console.log('JUGADORES => id:' + data.id + ' entra a jugar!!!');
       ioJugadores.sockets.emit('nojuegas');
       socket.emit('juegas');
       jugadorActual = socket;
+      nombre = data.nombre;
       ioPrincipal.emit('entrajugador');
     }
   });

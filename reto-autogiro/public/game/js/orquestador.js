@@ -1,8 +1,8 @@
 const ESTADOS = {
-  ARRANCANDO:       '0',
-  PIDE_JUGAOR:      '5',
+  ARRANCANDO:       '0',  // Estado inicial. Esperamos al mensaje juego nuevo
+  JUEGO_NUEVO:      '5',
   PIDIENDO_JUGADOR: '10',
-  ARRANQUE_JUEGO:   '15', // Establecido cuando llega el mensaje
+  ARRANQUE_JUEGO:   '15', // Establecido cuando llega el mensaje de jugador
   JUGANDO:          '20',
   FIN_JUEGO:        '90',
 };
@@ -19,42 +19,31 @@ class Orquestador  {
       Orquestador.instance = this;
 
       this.scene = scene;
-      this.presentacion = "";
       this.estado = ESTADOS.ARRANCANDO;
       this.player = new Player(scene);
+      this.ui = new UI(scene);
+
+      this.code = 'XX';
+      this.ranking = [];
 
       return this;
   }
 
   preload(){
-    this.scene.load.image('presentacion', 'assets/presentacion.png');
+
   }
 
   create(){
-    this.presentacion = this.scene.add.image(400, 300, 'presentacion');
-    this.presentacion.setDepth(1000);
-    this.presentacion.setVisible(false);
-    this.presentacion.setActive(false);
-
-    this.code = 'XXXX';
-    this.codeText = this.scene.add.text(200, 500, this.getTextCode(), { fontSize: '32px', fill: '#000' });
-    this.codeText.setDepth(1000);
-    this.codeText.setVisible(false);
-    this.codeText.setActive(false);
+    this.code = 'XX';
   }
 
   nuevoJuego(){
     this.count = PIDE_JUGADOR_RESET;
 
-    this.code = Math.floor(1000 + Math.random() * 9000);
+    this.code = Math.floor(10 + Math.random() * 90);
 
-    // Mostrar presentación y esperar jugador
-    this.presentacion.setVisible(true);
-    this.presentacion.setActive(true);
-
-    this.codeText.setText(this.getTextCode());
-    this.codeText.setVisible(true);
-    this.codeText.setActive(true);
+    this.ui.showPresentacion(this.code, this.count);
+    this.ui.showRanking(this.ranking);
 
     // Comunicaciones pide nuevo jugador
     this.comm.pedirJugadores(this.code);
@@ -63,10 +52,7 @@ class Orquestador  {
   comienzoJuego(){
     // Llega nuevo jugador
     // resetear puntuación y comenzar juego
-    this.presentacion.setVisible(false);
-    this.presentacion.setActive(false);
-    this.codeText.setVisible(false);
-    this.codeText.setActive(false);
+    this.ui.hidePresentation();
     this.player.reset();
     this.player.play();
   }
@@ -76,9 +62,20 @@ class Orquestador  {
   }
 
   update(){
+
+    if(this.estado == ESTADOS.ARRANCANDO) {
+      // Esperamos mensaje de juego nuevo
+    }
+
+    if(this.estado == ESTADOS.JUEGO_NUEVO) {
+      this.nuevoJuego();
+      this.estado = ESTADOS.PIDIENDO_JUGADOR;
+    }
+
     if(this.estado == ESTADOS.PIDIENDO_JUGADOR) {
       this.count--;
-      this.codeText.setText(this.getTextCode());
+      this.ui.actualizaPresentacion(this.code, this.count);
+
       if(this.count == 0){
         this.nuevoJuego();
       }
@@ -89,23 +86,23 @@ class Orquestador  {
       this.estado = ESTADOS.JUGANDO;
     }
 
-    if(this.estado == ESTADOS.ARRANCANDO || this.estado == ESTADOS.PIDE_JUGADOR) {
-      this.nuevoJuego();
-      this.estado = ESTADOS.PIDIENDO_JUGADOR;
-    }
-
     if(this.estado == ESTADOS.FIN_JUEGO) {
+      this.estado = ESTADOS.ARRANCANDO;
+      this.comm.enviaPuntos(this.player.getPuntos());
+      /*
       this.nuevoJuego();
       this.estado = ESTADOS.PIDIENDO_JUGADOR;
+      */
     }
-  }
-
-  getTextCode (){
-    return 'Introduce el código:' + this.code + '\n' + this.count + 'ts';
   }
 
   setArranqueJuego(){
     this.estado = ESTADOS.ARRANQUE_JUEGO;
+  }
+
+  setJuegoNuevo(ranking){
+    this.ranking = ranking;
+    this.estado = ESTADOS.JUEGO_NUEVO;
   }
 
   setFinJuego(){

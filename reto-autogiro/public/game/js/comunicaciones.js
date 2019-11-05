@@ -15,6 +15,10 @@ class Comunicaciones  {
       orquestador.setArranqueJuego();
     });
 
+    this.socket.on('juegonuevo', function(ranking) {
+      orquestador.setJuegoNuevo(ranking);
+    });
+
     this.socket.on('izquierda', function(data) {
       player.setIzquierda();
     });
@@ -22,13 +26,17 @@ class Comunicaciones  {
     this.socket.on('subir', function(data) {
       player.setSubir();
     });
-    
+
     this.socket.on('derecha', function(data) {
       player.setDerecha();
-    });    
+    });
   }
 
   pedirJugadores(code) {
     this.socket.emit('pidejugadores', code);
+  }
+
+  enviaPuntos(puntos) {
+    this.socket.emit('gameover', puntos);
   }
 }
