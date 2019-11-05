@@ -3,7 +3,7 @@ var jugabilidad = {
         gravedad: 200 // Valor que no tiene relación con magnitud física
     },
     player: {
-        movimientoY: 60,
+        movimientoX: 60,
         impulso: 150
     }
 }

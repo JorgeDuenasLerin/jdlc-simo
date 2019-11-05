@@ -32,17 +32,20 @@ class Player  {
     this.player.body.setEnable(true);
   }
 
-  setIzquierda() {
-    this.izquierda = true;
-    console.log(this.izquierda);
-  }
-
   setSubir() {
     this.subir = true;
   }
 
+  setIzquierda() {
+    this.izquierda = true;
+    this.derecha = false;
+    this.impulsado = false;
+  }
+
   setDerecha() {
     this.derecha = true;
+    this.izquierda = false;
+    this.impulsado = false;
   }
 
   update(){
@@ -51,41 +54,52 @@ class Player  {
       this.orquestador.setFinJuego();
     }
 
-    if (this.izquierda)
-    {
-      this.izquierda = false; 
-      this.player.setVelocityX(-10);        
+    if (this.izquierda) {
+        this.player.setVelocityX(-jugabilidad.player.movimientoX);
+        this.player.setAngle(-10);
+
+        if(!this.impulsado) {
+            this.impulsado = true;
+            this.player.setVelocityY(-jugabilidad.player.impulso);
+        }
     }
 
-    if (this.subir)
-    {
+    if (this.derecha) {
+        this.player.setVelocityX(jugabilidad.player.movimientoX);
+        this.player.setAngle(10);
+
+        if(!this.impulsado) {
+            this.impulsado = true;
+            this.player.setVelocityY(-jugabilidad.player.impulso);
+        }
+    }
+
+    if (this.subir) {
         this.subir = false;
+        this.derecha = false;
+        this.izquierda = false;
+
+        this.player.setVelocityX(0);
+        this.player.setAngle(0);
+
         this.player.setVelocityY(-jugabilidad.player.impulso);
     }
 
-    if (this.derecha)
-    {
-        this.derecha = false;
-        this.player.setVelocityX(10);
-    }
 
     /*
     if (cursors.left.isDown)
     {
-        player.setVelocityX(-jugabilidad.player.movimientoY);
-        player.setAngle(-10);
+
         //player.anims.play('left', true);
     }
     else if (cursors.right.isDown)
     {
-        player.setVelocityX(jugabilidad.player.movimientoY);
-        player.setAngle(10);
+
         //player.anims.play('right', true);
     }
     else
+
     {
-        player.setVelocityX(0);
-        player.setAngle(0);
         //player.anims.play('turn');
     }
 
