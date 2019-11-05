@@ -13,21 +13,36 @@ class Player  {
   }
 
   preload(){
-    this.scene.load.image('autogiro', 'assets/autogiro.png');
+    this.scene.load.spritesheet('autogiro', 'assets/autogiro_sprite.png', { frameWidth: 128, frameHeight: 128 });
   }
 
   create(){
     // Creamos la imagen del jugador con física
-    this.player = this.scene.physics.add.sprite(100, 100, 'autogiro');
-    this.player.setCollideWorldBounds(true);
-    this.player.body.setEnable(false);
+    this.spritePlayer = this.scene.physics.add.sprite(100, 100, 'autogiro');
+    this.spritePlayer.setOrigin(0,0);
+    this.spritePlayer.setCollideWorldBounds(true);
+    this.spritePlayer.body.setEnable(false);
+
+    this.scene.anims.create({
+      key: 'volar',
+      frames: this.scene.anims.generateFrameNumbers('autogiro'),
+      frameRate: 20,
+      repeat: -1
+    });
+
+    this.spritePlayer.anims.play('volar');
+    this.scene.physics.add.collider(this.spritePlayer, this.scene.terreno, this.estrellado);
+  }
+
+  estrellado() {
+    console.log('estrellado');
   }
 
   reset(){
     this.life = 1000;
     //TODO: Hacer sistema de puntos
     this.puntos = Math.floor(Math.random() * 1000);
-    this.player.setPosition(100,100);
+    this.spritePlayer.setPosition(100,100);
   }
 
   getPuntos(){
@@ -35,7 +50,7 @@ class Player  {
   }
 
   play(){
-    this.player.body.setEnable(true);
+    this.spritePlayer.body.setEnable(true);
   }
 
   setSubir() {
@@ -62,22 +77,22 @@ class Player  {
     }
 
     if (this.izquierda) {
-        this.player.setVelocityX(-jugabilidad.player.movimientoX);
-        this.player.setAngle(-10);
+        this.spritePlayer.setVelocityX(-jugabilidad.player.movimientoX);
+        this.spritePlayer.setAngle(-10);
 
         if(!this.impulsado) {
             this.impulsado = true;
-            this.player.setVelocityY(-jugabilidad.player.impulso);
+            this.spritePlayer.setVelocityY(-jugabilidad.player.impulso);
         }
     }
 
     if (this.derecha) {
-        this.player.setVelocityX(jugabilidad.player.movimientoX);
-        this.player.setAngle(10);
+        this.spritePlayer.setVelocityX(jugabilidad.player.movimientoX);
+        this.spritePlayer.setAngle(10);
 
         if(!this.impulsado) {
             this.impulsado = true;
-            this.player.setVelocityY(-jugabilidad.player.impulso);
+            this.spritePlayer.setVelocityY(-jugabilidad.player.impulso);
         }
     }
 
@@ -86,10 +101,10 @@ class Player  {
         this.derecha = false;
         this.izquierda = false;
 
-        this.player.setVelocityX(0);
-        this.player.setAngle(0);
+        this.spritePlayer.setVelocityX(0);
+        this.spritePlayer.setAngle(0);
 
-        this.player.setVelocityY(-jugabilidad.player.impulso);
+        this.spritePlayer.setVelocityY(-jugabilidad.player.impulso);
     }
 
 
