@@ -13,7 +13,7 @@ class Player  {
   }
 
   preload(){
-    this.scene.load.spritesheet('autogiro', 'assets/autogiro_sprite.png', { frameWidth: 128, frameHeight: 128 });
+    this.scene.load.spritesheet('autogiro', 'assets/autogiro_sprite.png', { frameWidth: 178, frameHeight: 128 });
   }
 
   create(){
@@ -23,6 +23,7 @@ class Player  {
     this.spritePlayer.setCollideWorldBounds(true);
     this.spritePlayer.body.setEnable(false);
 
+    // Animación del helicóptero
     this.scene.anims.create({
       key: 'volar',
       frames: this.scene.anims.generateFrameNumbers('autogiro'),
@@ -31,7 +32,8 @@ class Player  {
     });
 
     this.spritePlayer.anims.play('volar');
-    console.log('edi', this.scene.edificios)
+
+    // Colisión entre helicóptero y edificios
     this.scene.physics.add.collider(this.spritePlayer, this.scene.edificios.grupoEdificios, this.estrellado);
   }
 
