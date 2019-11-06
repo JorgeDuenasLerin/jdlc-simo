@@ -11,6 +11,23 @@ var ioJugadores = require('socket.io')(serverJugadores);
 appJuego.use(express.static('public/game'));
 appJugadores.use(express.static('public/player'));
 
+function escapeHtml(text) {
+  var map = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  };
+
+  return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+}
+
+
+var Ranking = require('./ranking.js');
+var ranking = new Ranking();
+ranking.read();
+
 
 var ioPrincipal;
 var code;
@@ -30,13 +47,12 @@ ioJuego.on('connection', function(socket) {
     console.log('Conseguidos puntos:' + data);
     console.log(nombre);
     console.log('fin partida');
-
-    ioPrincipal.emit('juegonuevo', [ {nombre: nombre, puntos: data} ]);
+    ranking.add(nombre, data);
+    ranking.write();
+    ioPrincipal.emit('juegonuevo', ranking.get10());
   });
 
-  ioPrincipal.emit('juegonuevo', [
-    {'p1':1}, {'p2':2}
-  ]);
+  ioPrincipal.emit('juegonuevo', ranking.get10());
 });
 
 serverJuego.listen(30000, function() {
@@ -55,6 +71,8 @@ ioJugadores.on('connection', function(socket) {
 
   socket.on('intentojugar', function(data) {
     console.log('JUGADORES => Recibido intento\nid:' + data.id + '\ncode: ' + data.code + '\nnombre: ' + data.nombre);
+    data.code = escapeHtml(data.code);
+    data.nombre = escapeHtml(data.nombre);
     if(data.code == code) {
       code = -1;
       console.log('JUGADORES => id:' + data.id + ' entra a jugar!!!');

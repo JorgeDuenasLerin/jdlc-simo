@@ -21,6 +21,12 @@ class UI  {
   }
 
   create(){
+    var rect = new Phaser.Geom.Rectangle(500, 50, 300, 400);
+    this.rankingBack = this.scene.add.graphics({ fillStyle: { color: 0x0A0AF0 } });
+    this.rankingBack.fillRectShape(rect);
+    //graphics.setInteractive(rect, event);
+
+
     this.presentacion = this.scene.add.image(400, 300, 'presentacion');
     this.presentacion.setDepth(1000);
     this.presentacion.setVisible(false);
@@ -32,7 +38,7 @@ class UI  {
     this.codeText.setActive(false);
 
     var testRanking = "Jugador: 0 puntos\nJugador: 0 puntos\nJugador: 0 puntos\nJugador: 0 puntos\n";
-    this.rankingText = this.scene.add.text(500, 50, testRanking , { fontSize: '24px', fill: '#FFF' });
+    this.rankingText = this.scene.add.text(550, 50, testRanking , { fontSize: '24px', fill: '#FFF' });
     this.rankingText.setDepth(1000);
     this.rankingText.setVisible(false);
     this.rankingText.setActive(false);
@@ -46,6 +52,7 @@ class UI  {
     this.codeText.setText(this.getTextCode(code, count));
     this.codeText.setVisible(true);
     this.codeText.setActive(true);
+    this.rankingBack.setVisible(true);
   }
 
   actualizaPresentacion(code, count){
@@ -59,12 +66,19 @@ class UI  {
     this.codeText.setActive(false);
     this.rankingText.setVisible(false);
     this.rankingText.setActive(false);
+    this.rankingBack.setVisible(false);
   }
 
   showRanking(ranking) {
-    this.rankingText.setText(ranking[0].nombre + ' - ' + ranking[0].puntos);
+    var ranking_text = "Clasificación\n\n";
+    var i = 1;
+    ranking.map(function(e){
+      ranking_text += i++ + 'º ' + e.nombre + ' (' + e.puntos + ')\n';
+    });
+    this.rankingText.setText(ranking_text);
     this.rankingText.setVisible(true);
     this.rankingText.setActive(true);
+    this.rankingBack.setVisible(true);
   }
 
   getTextCode (code, count){
