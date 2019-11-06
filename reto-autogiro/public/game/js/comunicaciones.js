@@ -10,7 +10,7 @@ class Comunicaciones  {
 
   connect(){
     var player = this.player;
-    this.socket = io.connect('http://' + + ':' + PORT, { 'forceNew': true });
+    this.socket = io.connect('http://' + URL + ':' + PORT, { 'forceNew': true });
 
     this.socket.on('entrajugador', function(data) {
       console.log('¡¡Comienza el juego!!');
