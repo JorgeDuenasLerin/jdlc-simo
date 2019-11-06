@@ -55,7 +55,7 @@ ioJuego.on('connection', function(socket) {
   ioPrincipal.emit('juegonuevo', ranking.get10());
 });
 
-serverJuego.listen(30000, function() {
+serverJuego.listen(30000, '0.0.0.0', function() {
   console.log("JUEGO: Servidor corriendo en http://localhost:30000");
 });
 
@@ -91,7 +91,7 @@ ioJugadores.on('connection', function(socket) {
   });
 });
 
-serverJugadores.listen(18080, function() {
+serverJugadores.listen(18080, '0.0.0.0', function() {
   console.log("JUGADORES: Servidor corriendo en http://localhost:18080");
 });
 

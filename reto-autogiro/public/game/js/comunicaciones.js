@@ -1,4 +1,6 @@
 const PORT = 30000;
+const URL = 'localhost';
+// const URL = 'simo.iesjuandelacierva.es';
 
 class Comunicaciones  {
   constructor() {
@@ -8,7 +10,7 @@ class Comunicaciones  {
 
   connect(){
     var player = this.player;
-    this.socket = io.connect('http://localhost:' + PORT, { 'forceNew': true });
+    this.socket = io.connect('http://' + + ':' + PORT, { 'forceNew': true });
 
     this.socket.on('entrajugador', function(data) {
       console.log('¡¡Comienza el juego!!');

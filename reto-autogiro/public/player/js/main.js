@@ -1,6 +1,9 @@
 let id = -1;
 
-const socket = io.connect('http://localhost:18080', { 'forceNew': true });
+const URL = 'localhost';
+// const URL = 'simo.iesjuandelacierva.es';
+
+const socket = io.connect('http://' + URL + ':18080', { 'forceNew': true });
 
 const btnEnviar = document.getElementById('enviar');
 const btnControles = document.getElementById('control');
