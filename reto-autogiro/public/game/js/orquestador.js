@@ -52,13 +52,24 @@ class Orquestador  {
     // Llega nuevo jugador
     // resetear puntuación y comenzar juego
     this.ui.hidePresentation();
+
     this.player.reset();
     this.player.play();
+
+    /*Chapuza de las 11 PM*/
+    //console.log(this.scene);
+    for (var i = 0; i < this.scene.patos.getChildren().length; i++) {
+      var pato = this.scene.patos.getChildren()[i];
+      pato.setActive(false);
+      pato.setVisible(false);
+      pato.destroy();
+      this.scene.patos.killAndHide(pato);
+    }
   }
 
   finJuego(){
     // Muerto finalizar juego
-    
+
   }
 
   update(){

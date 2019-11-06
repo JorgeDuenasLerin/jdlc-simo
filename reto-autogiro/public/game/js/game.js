@@ -46,8 +46,20 @@ function preload ()
 {
     console.log(game);
     this.load.image('sky', 'assets/sky.png');
-    this.load.audio('bso', 'assets/01 A Night Of Dizzy Spells.mp3');
-    this.load.audio('sndPato', 'assets/lose.wav');  
+    this.load.audio('bso', 'assets/BSO.mp3',{
+        mute: false,
+        volume: 0.8,
+        rate: 1,
+        detune: 0,
+        seek: 0,
+        loop: true,
+        delay: 0
+    });
+
+    this.load.audio('fxsubir', 'assets/fxsubir.mp3');
+    this.load.audio('gameover', 'assets/gameover.mp3');
+
+    this.load.audio('sndPato', 'assets/lose.wav');
 
     this.load.spritesheet('pato', 'assets/pato_sprite.png', { frameWidth: 53, frameHeight: 32 });
 
@@ -57,7 +69,7 @@ function preload ()
     player = new Player(this);
     player.preload();
 
-    // Edificios  
+    // Edificios
     this.edificios = new Edificio(this);
     this.edificios.preload();
 
@@ -101,6 +113,8 @@ function create ()
     // Sección musical
     sfx = this.sound.add('bso');
     this.sndPato = this.sound.add('sndPato');
+    this.fxsubir = this.sound.add('fxsubir');
+    this.gameover = this.sound.add('gameover');
 
     // Evento para mostrar los enemigos(patos)
      this.time.addEvent({
@@ -108,7 +122,7 @@ function create ()
         callback: agregarPato,
         callbackScope: this,
         loop: true
-      });    
+      });
 
       // Grupo de patos en pantalla
       this.patos = this.physics.add.group({
@@ -134,6 +148,7 @@ function update ()
     player.update();
 
     if(!audioStart && cursors.left.isDown) {
+        sfx.setLoop(true);
         sfx.play();
     }
 
@@ -142,12 +157,12 @@ function update ()
 
     // Matar los patos fuera de pantalla
     for (var i = 0; i < this.patos.getChildren().length; i++) {
-        var pato = this.patos.getChildren()[i]; 
+        var pato = this.patos.getChildren()[i];
         if (pato.x < -pato.displayWidth)  {
             this.patos.killAndHide(pato);
         }
       }
-  
+
 }
 
 function agregarPato() {
