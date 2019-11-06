@@ -25,7 +25,7 @@ html {font-size: 1em;}
 body {
   min-height: 100vh;
   line-height: 1.5;
-  font-family: system-ui, 'Courier New',  sans-serif;
+  font-family: system-ui, 'Courrier New',  sans-serif;
 }    
 
 /* flow */
@@ -79,7 +79,7 @@ main > header > h1 {
 
 button {
   border: 0;
-  font-family: system-ui, sans-serif;
+  font-family: system-ui, 'Courrier New', sans-serif;
   user-select: none;
 }
 
@@ -95,6 +95,9 @@ button {
   box-shadow: 0px 5px #49a7df;
   font-weight: 700;
   position: relative;
+
+  width: 11em;
+  align-self: center;
 }
 
 #enviar::after {
@@ -129,4 +132,16 @@ button {
 
 h1, h3 {
   text-align: center;
+}
+
+#manda-juego {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  display: block;
+  text-align: center;
+  margin-bottom: 0.5em;
 }
