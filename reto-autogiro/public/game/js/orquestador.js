@@ -24,7 +24,6 @@ class Orquestador  {
       this.ui = new UI(scene);
 
       this.code = 'XX';
-      this.ranking = [];
 
       return this;
   }
@@ -59,10 +58,10 @@ class Orquestador  {
 
   finJuego(){
     // Muerto finalizar juego
+    
   }
 
   update(){
-
     if(this.estado == ESTADOS.ARRANCANDO) {
       // Esperamos mensaje de juego nuevo
     }
@@ -86,13 +85,13 @@ class Orquestador  {
       this.estado = ESTADOS.JUGANDO;
     }
 
+    if(this.estado == ESTADOS.JUGANDO) {
+      this.ui.actualizaPuntos();
+    }
+
     if(this.estado == ESTADOS.FIN_JUEGO) {
       this.estado = ESTADOS.ARRANCANDO;
       this.comm.enviaPuntos(this.player.getPuntos());
-      /*
-      this.nuevoJuego();
-      this.estado = ESTADOS.PIDIENDO_JUGADOR;
-      */
     }
   }
 

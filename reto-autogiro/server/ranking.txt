@@ -1,4 +1,9 @@
-Jorge3*;*615
-Jorge*;*339
-Jorge*;*193
-Jorge3*;*139
+Jorge*;*1827
+Jorge*;*613
+Jorge*;*541
+Jorge*;*369
+Jorge*;*184
+Jorge*;*181
+Jorge*;*179
+Jorge*;*140
+Jorge*;*15

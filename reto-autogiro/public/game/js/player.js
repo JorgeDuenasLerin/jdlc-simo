@@ -1,3 +1,5 @@
+var INCREMENTO = 1;
+
 class Player  {
   constructor(scene = "") {
       if (!!Player.instance) {
@@ -8,6 +10,7 @@ class Player  {
 
       this.scene = scene;
       this.orquestador = new Orquestador(scene);
+      this.jugando = false;
 
       return this;
   }
@@ -19,6 +22,7 @@ class Player  {
   create(){
     // Creamos la imagen del jugador con física
     this.spritePlayer = this.scene.physics.add.sprite(100, 100, 'autogiro');
+    //this.spritePlayer.setDisplaySize(50,25);
     this.spritePlayer.setOrigin(0,0);
     this.spritePlayer.setCollideWorldBounds(true);
     this.spritePlayer.body.setEnable(false);
@@ -38,13 +42,16 @@ class Player  {
   }
 
   estrellado() {
+    // Contexto cambia
+    // Obtengo Singleton
+    var p = new Player();
+    p.estrellado = true;
     console.log('estrellado');
   }
 
   reset(){
-    this.life = 1000;
-    //TODO: Hacer sistema de puntos
-    this.puntos = Math.floor(Math.random() * 1000);
+    this.puntos = 0;
+    this.estrellado = false;
     this.spritePlayer.setPosition(100,100);
   }
 
@@ -54,6 +61,12 @@ class Player  {
 
   play(){
     this.spritePlayer.body.setEnable(true);
+    this.jugando = true;
+  }
+
+  noPlay(){
+    this.spritePlayer.body.setEnable(false);
+    this.jugando = false;
   }
 
   setSubir() {
@@ -73,10 +86,16 @@ class Player  {
   }
 
   update(){
-    this.life--;
-    if(this.life == 0) {
+    if(!this.jugando) {
+      return;
+    }
 
+    if(this.estrellado) {
+      this.noPlay(); // Game over
       this.orquestador.setFinJuego();
+      return;
+    } else {
+      this.puntos += INCREMENTO;
     }
 
     if (this.izquierda) {
@@ -85,7 +104,7 @@ class Player  {
 
         if(!this.impulsado) {
             this.impulsado = true;
-            this.spritePlayer.setVelocityY(-jugabilidad.player.impulso);
+            this.spritePlayer.setVelocityY(-jugabilidad.player.impulso / 3);
         }
     }
 
@@ -95,7 +114,7 @@ class Player  {
 
         if(!this.impulsado) {
             this.impulsado = true;
-            this.spritePlayer.setVelocityY(-jugabilidad.player.impulso);
+            this.spritePlayer.setVelocityY(-jugabilidad.player.impulso / 3);
         }
     }
 
@@ -109,28 +128,5 @@ class Player  {
 
         this.spritePlayer.setVelocityY(-jugabilidad.player.impulso);
     }
-
-
-    /*
-    if (cursors.left.isDown)
-    {
-
-        //player.anims.play('left', true);
-    }
-    else if (cursors.right.isDown)
-    {
-
-        //player.anims.play('right', true);
-    }
-    else
-
-    {
-        //player.anims.play('turn');
-    }
-
-    if (cursors.up.isDown)
-    {
-        player.setVelocityY(-jugabilidad.player.impulso);
-    }*/
   }
 }

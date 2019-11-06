@@ -21,9 +21,6 @@ class UI  {
   }
 
   create(){
-
-
-
     this.presentacion = this.scene.add.image(400, 300, 'presentacion');
     this.presentacion.setDepth(1000);
     this.presentacion.setVisible(false);
@@ -39,7 +36,7 @@ class UI  {
     this.codeText.setActive(false);
 
 
-    var rect = new Phaser.Geom.Rectangle(500, 50, 300, 350);
+    var rect = new Phaser.Geom.Rectangle(500, 50, 300, 380);
     this.rankingBack = this.scene.add.graphics({ fillStyle: { color: 0x0A0AF0,  alpha: 0.6 } });
     this.rankingBack.fillRectShape(rect);
 
@@ -48,6 +45,17 @@ class UI  {
     this.rankingText.setDepth(1000);
     this.rankingText.setVisible(false);
     this.rankingText.setActive(false);
+
+    var rect = new Phaser.Geom.Rectangle(10, 10, 160, 30);
+    this.puntosBack = this.scene.add.graphics({ fillStyle: { color: 0xFFFFFF,  alpha: 1 } });
+    this.puntosBack.fillRectShape(rect);
+    this.puntosText = this.scene.add.text(15, 10, "Puntos:", { fontSize: '24px', fill: '#00F' });
+    this.puntosText.setDepth(1100);
+    this.puntosText.setActive(true);
+    this.puntosBack.setVisible(true);
+    this.puntosText.setVisible(true);
+
+    this.puntosActualesText = this.scene.add.text(105, 12, "0", { fontSize: '24px', fill: '#F0F' });
   }
 
   showPresentacion(code, count) {
@@ -57,18 +65,25 @@ class UI  {
 
     this.codeText.setText(this.getTextCode(code, count));
     this.codeText.setVisible(true);
+    this.codeBack.setVisible(true);
     this.codeText.setActive(true);
     this.rankingBack.setVisible(true);
+
   }
 
   actualizaPresentacion(code, count){
     this.codeText.setText(this.getTextCode(code, count));
   }
 
+  actualizaPuntos(){
+    this.puntosActualesText.setText(this.player.getPuntos());
+  }
+
   hidePresentation() {
     this.presentacion.setVisible(false);
     this.presentacion.setActive(false);
     this.codeText.setVisible(false);
+    this.codeBack.setVisible(false);
     this.codeText.setActive(false);
     this.rankingText.setVisible(false);
     this.rankingText.setActive(false);
