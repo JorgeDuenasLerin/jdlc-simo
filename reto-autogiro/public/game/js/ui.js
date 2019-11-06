@@ -21,18 +21,30 @@ class UI  {
   }
 
   create(){
+
+
+
     this.presentacion = this.scene.add.image(400, 300, 'presentacion');
     this.presentacion.setDepth(1000);
     this.presentacion.setVisible(false);
     this.presentacion.setActive(false);
 
-    this.codeText = this.scene.add.text(200, 500, this.getTextCode('XXXX', 0), { fontSize: '32px', fill: '#000' });
+
+    var rect = new Phaser.Geom.Rectangle(180, 450, 530, 300);
+    this.codeBack = this.scene.add.graphics({ fillStyle: { color: 0xFFFFFF,  alpha: 0.9 } });
+    this.codeBack.fillRectShape(rect);
+    this.codeText = this.scene.add.text(200, 460, this.getTextCode('XXXX', 0), { fontSize: '24px', fill: '#000' });
     this.codeText.setDepth(1000);
     this.codeText.setVisible(false);
     this.codeText.setActive(false);
 
+
+    var rect = new Phaser.Geom.Rectangle(500, 50, 300, 350);
+    this.rankingBack = this.scene.add.graphics({ fillStyle: { color: 0x0A0AF0,  alpha: 0.6 } });
+    this.rankingBack.fillRectShape(rect);
+
     var testRanking = "Jugador: 0 puntos\nJugador: 0 puntos\nJugador: 0 puntos\nJugador: 0 puntos\n";
-    this.rankingText = this.scene.add.text(500, 50, testRanking , { fontSize: '24px', fill: '#FFF' });
+    this.rankingText = this.scene.add.text(550, 50, testRanking , { fontSize: '26px', fill: '#FFF' });
     this.rankingText.setDepth(1000);
     this.rankingText.setVisible(false);
     this.rankingText.setActive(false);
@@ -46,6 +58,7 @@ class UI  {
     this.codeText.setText(this.getTextCode(code, count));
     this.codeText.setVisible(true);
     this.codeText.setActive(true);
+    this.rankingBack.setVisible(true);
   }
 
   actualizaPresentacion(code, count){
@@ -59,15 +72,26 @@ class UI  {
     this.codeText.setActive(false);
     this.rankingText.setVisible(false);
     this.rankingText.setActive(false);
+    this.rankingBack.setVisible(false);
   }
 
   showRanking(ranking) {
-    this.rankingText.setText(ranking[0].nombre + ' - ' + ranking[0].puntos);
+    var ranking_text = "Clasificación\n\n";
+    var i = 1;
+    ranking.map(function(e){
+      ranking_text += i++ + 'º ' + e.nombre + ' (' + e.puntos + ')\n';
+    });
+    this.rankingText.setText(ranking_text);
     this.rankingText.setVisible(true);
     this.rankingText.setActive(true);
+    this.rankingBack.setVisible(true);
   }
 
   getTextCode (code, count){
-    return 'Introduce el código:' + code + '\n' + count + 'ts';
+    var txt = "Para jugar, visita:\n";
+    txt += "http://simo.iesjuandelacierva.es\n\n";
+    txt += 'Introduce el código: ' + code + '\n';
+    txt += 'Cambio de código en ' + count + 'ms';
+    return txt;
   }
 }

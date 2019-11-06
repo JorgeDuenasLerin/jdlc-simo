@@ -7,7 +7,7 @@ const ESTADOS = {
   FIN_JUEGO:        '90',
 };
 
-const PIDE_JUGADOR_RESET = 500;
+const PIDE_JUGADOR_RESET = 1500;
 
 class Orquestador  {
 
