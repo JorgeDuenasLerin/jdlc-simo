@@ -56,6 +56,9 @@ class Player  {
     this.puntos = 0;
     this.estrellado = false;
     this.spritePlayer.setPosition(100,100);
+    this.spritePlayer.setVelocityX(0);
+    this.spritePlayer.setVelocityY(0);
+    this.spritePlayer.setAngle(0);
   }
 
   getPuntos(){

@@ -28,9 +28,9 @@ class UI  {
 
 
     var rect = new Phaser.Geom.Rectangle(180, 450, 530, 300);
-    this.codeBack = this.scene.add.graphics({ fillStyle: { color: 0xFFFFFF,  alpha: 0.9 } });
+    this.codeBack = this.scene.add.graphics({fillStyle: { color: 0xFFFFFF,  alpha: 0.9 }});
     this.codeBack.fillRectShape(rect);
-    this.codeText = this.scene.add.text(200, 460, this.getTextCode('XXXX', 0), { fontSize: '24px', fill: '#000' });
+    this.codeText = this.scene.add.text(200, 460, this.getTextCode('XXXX', 0), { fontFamily: 'LevelUP', fontSize: '23px', fill: '#000' });
     this.codeText.setDepth(1000);
     this.codeText.setVisible(false);
     this.codeText.setActive(false);
@@ -41,7 +41,7 @@ class UI  {
     this.rankingBack.fillRectShape(rect);
 
     var testRanking = "Jugador: 0 puntos\nJugador: 0 puntos\nJugador: 0 puntos\nJugador: 0 puntos\n";
-    this.rankingText = this.scene.add.text(550, 50, testRanking , { fontSize: '26px', fill: '#FFF' });
+    this.rankingText = this.scene.add.text(580, 60, testRanking , { fontFamily: 'LevelUP', fontSize: '26px', fill: '#FFF' });
     this.rankingText.setDepth(1000);
     this.rankingText.setVisible(false);
     this.rankingText.setActive(false);
@@ -49,13 +49,13 @@ class UI  {
     var rect = new Phaser.Geom.Rectangle(10, 10, 160, 30);
     this.puntosBack = this.scene.add.graphics({ fillStyle: { color: 0xFFFFFF,  alpha: 1 } });
     this.puntosBack.fillRectShape(rect);
-    this.puntosText = this.scene.add.text(15, 10, "Puntos:", { fontSize: '24px', fill: '#00F' });
+    this.puntosText = this.scene.add.text(15, 10, "Puntos", { fontFamily: 'LevelUP', fontSize: '24px', fill: '#00F' });
     this.puntosText.setDepth(1100);
     this.puntosText.setActive(true);
     this.puntosBack.setVisible(true);
     this.puntosText.setVisible(true);
 
-    this.puntosActualesText = this.scene.add.text(105, 12, "0", { fontSize: '24px', fill: '#F0F' });
+    this.puntosActualesText = this.scene.add.text(105, 11, "0", { fontFamily: 'LevelUP', fontSize: '24px', fill: '#F0F' });
   }
 
   showPresentacion(code, count) {
@@ -104,7 +104,7 @@ class UI  {
 
   getTextCode (code, count){
     var txt = "Para jugar, visita:\n";
-    txt += "http://simo.iesjuandelacierva.es\n\n";
+    txt += "http://simo . iesjuandelacierva . es\n\n";
     txt += 'Introduce el código: ' + code + '\n';
     txt += 'Cambio de código en ' + count + 'ms';
     return txt;

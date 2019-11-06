@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 jose*;*1055
 jose*;*931
 jose*;*861
@@ -10,3 +11,24 @@ jose*;*71
 jose*;*57
 JOSE*;*49
 jose*;*12
+=======
+Jorge*;*959
+Jorge*;*853
+Jorge*;*565
+Jorge*;*518
+Jorge*;*506
+Jorge*;*416
+Jorge*;*393
+Jorge*;*371
+jkh*;*319
+Jorge*;*245
+Jorge*;*201
+Jorge*;*110
+Jorge*;*76
+Jorge*;*68
+Jorge*;*65
+Jorge*;*60
+Jorge*;*53
+Jorge*;*35
+Jorge*;*2
+>>>>>>> 6a0a3b523b86e44e599a675f6ff80dc133e41009
