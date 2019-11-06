@@ -73,19 +73,13 @@ function create ()
     // Fondo
     this.add.image(400, 300, 'sky');
 
-
-
+    // Animación pato
     this.anims.create({
         key: 'volar_p',
         frames: this.anims.generateFrameNumbers('pato'),
-        frameRate: 20,
+        frameRate: 10,
         repeat: -1
       });
-    //this.pato.anims.play('volar');
-
-/*     this.patos5 = this.physics.add.group({key: 'patos5', frameQuantity:2, dragY: 0, velocityX: -200, allowGravity:false });
-    var rect = new Phaser.Geom.Rectangle(200, 0, 700, 300);
-    Phaser.Actions.RandomRectangle(this.patos5.getChildren(), rect); */
 
     orquestador.create();
     this.edificios.create();
@@ -109,13 +103,21 @@ function create ()
     // Evento para mostrar los enemigos(patos)
      this.time.addEvent({
         delay: 2000,
-        callback: patos,
+        callback: agregarPato,
         callbackScope: this,
         loop: true
-      });
-      this.patos = this.physics.add.group({  dragY: 0, velocityX: -200, allowGravity:false });
-      this.patos.enableBody = true;
-      this.physics.add.collider(player.spritePlayer, this.patos, player.estrellado);
+      });    
+
+      // Grupo de patos en pantalla
+      this.patos = this.physics.add.group({
+        defaultKey: 'pato',
+        maxSize: 20,
+        allowGravity:false,
+    });
+    this.patos.enableBody = true;
+
+    // Patos sobre helicóptero
+    this.physics.add.overlap(player.spritePlayer, this.patos, player.estrellado);
 }
 
 function update ()
@@ -125,7 +127,6 @@ function update ()
 
     if(!audioStart && cursors.left.isDown) {
         sfx.play();
-
     }
 
     //controlPlayer.update();
@@ -135,20 +136,29 @@ function update ()
         player.setVelocityY(-jugabilidad.player.impulso);
     }*/
 
+    // Mover edificios
     this.edificios.update();
+
+    // Matar los patos fuera de pantalla
+    for (var i = 0; i < this.patos.getChildren().length; i++) {
+        var pato = this.patos.getChildren()[i]; 
+        if (pato.x < -pato.displayWidth)  {
+            this.patos.killAndHide(pato);
+        }
+      }
+  
 }
 
+function agregarPato() {
+    var pato = this.patos.get(
+        Phaser.Math.Between(game.config.width + 10, game.config.width + 50),
+        Phaser.Math.Between(0, game.config.height - 120));
 
-function patos() {
+    if (!pato) return; // No hay patos
 
-    for(let i = 0; i < 1; i++) {
-        this.pato = this.physics.add.sprite(
-            Phaser.Math.Between(game.config.width + 10, game.config.width + 50), 
-            Phaser.Math.Between(0, game.config.height - 120), 'pato');
-        this.pato.anims.play('volar_p');
-        this.patos.add(this.pato);
-    }
-
-    // Muchos patos
-    console.log('patos:', this.patos.children.size)
+    pato
+    .setActive(true)
+    .setVisible(true)
+    .play('volar_p')
+    .body.velocity.x = -Phaser.Math.Between(150,225);
 }
