@@ -35,26 +35,31 @@ function clearUI(){
 }
 
 socket.on('introcodigo', function(data) {
+  console.log('introcodigo');
   clearUI();
   manda.style.display = "flex";
 });
 
 socket.on('id', function(data) {
+  console.log('id');
   id = data;
   displayId.innerHTML = id;
 });
 
 socket.on('juegas', function(data) {
+  console.log('juegas');
   clearUI();
   juega.style.display = "initial";
 });
 
 socket.on('nojuegas', function(data) {
+  console.log('nojuegas');
   clearUI();
   losiento.style.display = "initial";
 });
 
 socket.on('damenombre', function(data) {
+  console.log('damenombre');
   clearUI();
   juega.style.display = "initial";
 });

@@ -55,16 +55,6 @@ class Orquestador  {
 
     this.player.reset();
     this.player.play();
-
-    /*Chapuza de las 11 PM*/
-    //console.log(this.scene);
-    for (var i = 0; i < this.scene.patos.getChildren().length; i++) {
-      var pato = this.scene.patos.getChildren()[i];
-      pato.setActive(false);
-      pato.setVisible(false);
-      pato.destroy();
-      this.scene.patos.killAndHide(pato);
-    }
   }
 
   finJuego(){
@@ -73,6 +63,7 @@ class Orquestador  {
   }
 
   update(){
+    console.log(this.estado);
     if(this.estado == ESTADOS.ARRANCANDO) {
       // Esperamos mensaje de juego nuevo
     }
@@ -83,6 +74,7 @@ class Orquestador  {
     }
 
     if(this.estado == ESTADOS.PIDIENDO_JUGADOR) {
+      console.log(this.count);
       this.count--;
       this.ui.actualizaPresentacion(this.code, this.count);
 

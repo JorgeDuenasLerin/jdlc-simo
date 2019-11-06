@@ -59,7 +59,7 @@ function preload ()
     this.load.audio('fxsubir', 'assets/fxsubir.mp3');
     this.load.audio('gameover', 'assets/gameover.mp3');
 
-    this.load.audio('sndPato', 'assets/lose.wav');
+    this.load.audio('sndPato', 'assets/gameover.mp3');
 
     this.load.spritesheet('pato', 'assets/pato_sprite.png', { frameWidth: 53, frameHeight: 32 });
 

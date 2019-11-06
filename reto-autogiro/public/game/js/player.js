@@ -77,6 +77,7 @@ class Player  {
 
   setSubir() {
     this.subir = true;
+    this.scene.fxsubir.play();
   }
 
   setIzquierda() {
@@ -97,6 +98,7 @@ class Player  {
     }
 
     if(this.estrellado) {
+      console.log('Estrellado!');
       this.noPlay(); // Game over
       this.orquestador.setFinJuego();
       return;
