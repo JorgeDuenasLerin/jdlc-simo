@@ -10,6 +10,14 @@ const btnControles = document.getElementById('control');
 
 btnEnviar.addEventListener('click', enviarCodigo);
 btnControles.addEventListener('click', enviarComando);
+document.getElementById("codigo")
+    .addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+      btnEnviar.click();
+    }
+});
+
 
 var otro = document.getElementById('losiento');
 var manda = document.getElementById('manda-juego');
@@ -28,7 +36,7 @@ function clearUI(){
 
 socket.on('introcodigo', function(data) {
   clearUI();
-  manda.style.display = "initial";
+  manda.style.display = "flex";
 });
 
 socket.on('id', function(data) {
@@ -53,8 +61,8 @@ socket.on('damenombre', function(data) {
 
 function enviarCodigo(evt) {
   // TODO: No depender de HTML
-  var nombre = this.parentNode.children[0].value;
-  var codigo = this.parentNode.children[2].value;
+  var nombre = document.getElementsByName('nombre')[0].value;
+  var codigo = document.getElementsByName('codigo')[0].value;
   socket.emit('intentojugar', {
     'id': id,
     'code': codigo,
