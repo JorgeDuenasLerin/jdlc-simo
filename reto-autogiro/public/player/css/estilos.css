@@ -25,7 +25,7 @@ html {font-size: 1em;}
 body {
   min-height: 100vh;
   line-height: 1.5;
-  font-family: system-ui, sans-serif;
+  font-family: system-ui, 'Courier New',  sans-serif;
 }    
 
 /* flow */
