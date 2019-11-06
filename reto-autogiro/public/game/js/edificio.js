@@ -1,6 +1,6 @@
 const ANCHO_EDIFICIO = 117;
 const NUMERO_EDIFICIOS = 100;
-const VELOCIDAD_EDIFICIOS = 5;
+const VELOCIDAD_EDIFICIOS = 2;
 
 class Edificio {
   constructor(scene){
@@ -20,11 +20,15 @@ preload() {
 }
 
 create(){
-    this.grupoEdificios = this.scene.physics.add.group();
-    this.grupoEdificios.enableBody = true;
-    
-    let posX = game.config.width;
+  
+    this.grupoEdificios = this.scene.physics.add.group({
+        defaultKey: 'edificio',
+        allowGravity:false,
+    });
 
+    this.grupoEdificios.enableBody = true;
+
+    let posX = game.config.width + 5;
     for (var i = 0; i < NUMERO_EDIFICIOS; i++) {
         var edificio = null;
 
@@ -39,16 +43,13 @@ create(){
         posX += ANCHO_EDIFICIO;
         edificio.ox = edificio.x;
         this.grupoEdificios.add(edificio);
-        edificio.body.allowGravity = false;
-    }
-   
+    } 
+
 }
 
 update(){
-   
-    this.grupoEdificios.children.iterate(function(child) {
-        child.x -= VELOCIDAD_EDIFICIOS;
-    }.bind(this));
+
+    Phaser.Actions.IncX(this.grupoEdificios.getChildren(), -VELOCIDAD_EDIFICIOS);
 
     this.count++;
     if (this.count == Math.round(ANCHO_EDIFICIO * (NUMERO_EDIFICIOS + 7) / VELOCIDAD_EDIFICIOS)) {
@@ -56,6 +57,6 @@ update(){
         this.grupoEdificios.children.iterate(function(child) {
             child.x = child.ox;
         }.bind(this));
-    }
+    } 
 }
 }
