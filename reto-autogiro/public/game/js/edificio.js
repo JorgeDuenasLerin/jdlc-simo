@@ -23,7 +23,8 @@ create(){
   
     this.grupoEdificios = this.scene.physics.add.group({
         defaultKey: 'edificio',
-        allowGravity:false,
+        immovable: true,
+        allowGravity:false
     });
 
     this.grupoEdificios.enableBody = true;
