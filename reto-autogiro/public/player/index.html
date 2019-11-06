@@ -11,17 +11,14 @@
     <header>
       <img src="assets/logo.png" alt="logoIES">
       <h1>IES Juan de la Cierva</h1>
-      <img src="assets/logoCM.jpg" alt="logoCM">
+      <img src="assets/LogoCM.jpg" alt="logoCM">
     </header>
     <section id="manda-juego">
       <h2>id:<span id="id">-1</span></h2>
       <br>
       <h3>Intenta jugar</h3>
-      <label for="">
-        Nombre:
-        <input placeholder="max 15 carac." type="text" maxlength="15" size="10" focus><br>
-        Código:
-        <input type="text" maxlength="2" size="2"><br>
+      <label>Nombre: <input name="nombre" placeholder="max 15 carac." type="text" maxlength="15" size="10" focus></label>
+      <label>Código: <input name="codigo" id=codigo type="text" maxlength="2" size="10"></label>
         <button id=enviar>Enviar</button>
       </label>
    </section>
@@ -29,9 +26,9 @@
     <section id="juega">
       <h3>¡¡Juega!!</h3>
       <div id="control">
-        <button id=izquierda>&#11164;</button>
-        <button id=subir>&#11165;</button>
-        <button id=derecha>&#11166;</button>
+        <button id=izquierda>&nwarr;</button>
+        <button id=subir>&uarr;</button>
+        <button id=derecha>&nearr;</button>
       </div>
     </section>
 
