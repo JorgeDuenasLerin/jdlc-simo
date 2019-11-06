@@ -47,16 +47,17 @@ function preload ()
     console.log(game);
     this.load.image('sky', 'assets/sky.png');
     this.load.audio('bso', 'assets/01 A Night Of Dizzy Spells.mp3');
+    this.load.audio('sndPato', 'assets/lose.wav');  
 
-    this.load.spritesheet('pato', 'assets/pato_sprite.png', { frameWidth: 63, frameHeight: 38 });
+    this.load.spritesheet('pato', 'assets/pato_sprite.png', { frameWidth: 53, frameHeight: 32 });
 
     orquestador = new Orquestador(this);
     orquestador.preload();
 
     player = new Player(this);
     player.preload();
-    // Edificios
-   
+
+    // Edificios  
     this.edificios = new Edificio(this);
     this.edificios.preload();
 
@@ -99,10 +100,11 @@ function create ()
 
     // Sección musical
     sfx = this.sound.add('bso');
+    this.sndPato = this.sound.add('sndPato');
 
     // Evento para mostrar los enemigos(patos)
      this.time.addEvent({
-        delay: 2000,
+        delay: 2500,
         callback: agregarPato,
         callbackScope: this,
         loop: true
@@ -117,7 +119,13 @@ function create ()
     this.patos.enableBody = true;
 
     // Patos sobre helicóptero
-    this.physics.add.overlap(player.spritePlayer, this.patos, player.estrellado);
+    this.physics.add.overlap(player.spritePlayer, this.patos, estrelladoPato, null, this);
+}
+
+function estrelladoPato() {
+    player.estrellado = true;
+    this.sndPato.play();
+    console.log('patomenos')
 }
 
 function update ()
@@ -128,13 +136,6 @@ function update ()
     if(!audioStart && cursors.left.isDown) {
         sfx.play();
     }
-
-    //controlPlayer.update();
-    /*
-    if (subir) {
-        subir = false;
-        player.setVelocityY(-jugabilidad.player.impulso);
-    }*/
 
     // Mover edificios
     this.edificios.update();
@@ -157,6 +158,7 @@ function agregarPato() {
     if (!pato) return; // No hay patos
 
     pato
+    .setScale(Phaser.Math.Between(7,10)/10)
     .setActive(true)
     .setVisible(true)
     .play('volar_p')
