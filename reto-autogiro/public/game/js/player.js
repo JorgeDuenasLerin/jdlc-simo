@@ -31,7 +31,8 @@ class Player  {
     });
 
     this.spritePlayer.anims.play('volar');
-    this.scene.physics.add.collider(this.spritePlayer, this.scene.terreno, this.estrellado);
+    console.log('edi', this.scene.edificios)
+    this.scene.physics.add.collider(this.spritePlayer, this.scene.edificios.grupoEdificios, this.estrellado);
   }
 
   estrellado() {

@@ -44,20 +44,21 @@ var scoreText;
 
 function preload ()
 {
+    console.log(game);
     this.load.image('sky', 'assets/sky.png');
     this.load.audio('bso', 'assets/01 A Night Of Dizzy Spells.mp3');
-    this.load.image('edificio_peq', 'assets/edificio_peq.png'); //,  { frameWidth: 128, frameHeight: 128 });
-    this.load.image('edificio_med', 'assets/edificio_med.png'); //, { frameWidth: 128, frameHeight: 128 });
-    this.load.image('edificio_grande', 'assets/edificio_grande.png');
-    this.load.spritesheet('patos5', 'assets/patos5_sprite.png', { frameWidth: 128, frameHeight: 128 });
 
-
+    this.load.spritesheet('pato', 'assets/pato_sprite.png', { frameWidth: 63, frameHeight: 38 });
 
     orquestador = new Orquestador(this);
     orquestador.preload();
 
     player = new Player(this);
     player.preload();
+    // Edificios
+   
+    this.edificios = new Edificio(this);
+    this.edificios.preload();
 
     ui = new UI(this);
     ui.preload();
@@ -72,40 +73,22 @@ function create ()
     // Fondo
     this.add.image(400, 300, 'sky');
 
-    // Edificios
-/*     this.anims.create({
-        key: 'edif_peq',
-        frames: this.anims.generateFrameNumbers('edificio_peq'),
-        frameRate: 20,
-        repeat: -1
-    });
+
 
     this.anims.create({
-        key: 'edif_med',
-        frames: this.anims.generateFrameNumbers('edificio_med'),
+        key: 'volar_p',
+        frames: this.anims.generateFrameNumbers('pato'),
         frameRate: 20,
         repeat: -1
-    });     */
+      });
+    //this.pato.anims.play('volar');
 
-    this.terreno = this.physics.add.staticGroup();
-
-    this.terreno.create(0,  game.config.height- 128 / 4, 'edificio_peq').setScale(.5).refreshBody();
-    this.terreno.create(128/2, game.config.height - 128 / 2, 'edificio_grande').setScale(1.2).refreshBody();
-    this.terreno.create(256, game.config.height - 128 / 2, 'edificio_med');
-    this.terreno.create(384, game.config.height - 128 / 2, 'edificio_peq').setScale(.5).refreshBody();
-    this.terreno.create(512, game.config.height - 128 / 2, 'edificio_grande').setScale(1.2).refreshBody();
-
-/*     this.sptEdificioPeq.anims.play('edif_peq');
-    this.sptEdificioMed.anims.play('edif_med'); */
-
-
-    this.patos5 = this.physics.add.group({key: 'patos5', frameQuantity:2});
+/*     this.patos5 = this.physics.add.group({key: 'patos5', frameQuantity:2, dragY: 0, velocityX: -200, allowGravity:false });
     var rect = new Phaser.Geom.Rectangle(200, 0, 700, 300);
-    Phaser.Actions.RandomRectangle(this.patos5.getChildren(), rect);
-
-   // this.terreno.refresh();
+    Phaser.Actions.RandomRectangle(this.patos5.getChildren(), rect); */
 
     orquestador.create();
+    this.edificios.create();
     player.create();
     ui.create();
 
@@ -123,6 +106,16 @@ function create ()
     // Sección musical
     sfx = this.sound.add('bso');
 
+    // Evento para mostrar los enemigos(patos)
+     this.time.addEvent({
+        delay: 2000,
+        callback: patos,
+        callbackScope: this,
+        loop: true
+      });
+      this.patos = this.physics.add.group({  dragY: 0, velocityX: -200, allowGravity:false });
+      this.patos.enableBody = true;
+      this.physics.add.collider(player.spritePlayer, this.patos, player.estrellado);
 }
 
 function update ()
@@ -141,4 +134,21 @@ function update ()
         subir = false;
         player.setVelocityY(-jugabilidad.player.impulso);
     }*/
+
+    this.edificios.update();
+}
+
+
+function patos() {
+
+    for(let i = 0; i < 1; i++) {
+        this.pato = this.physics.add.sprite(
+            Phaser.Math.Between(game.config.width + 10, game.config.width + 50), 
+            Phaser.Math.Between(0, game.config.height - 120), 'pato');
+        this.pato.anims.play('volar_p');
+        this.patos.add(this.pato);
+    }
+
+    // Muchos patos
+    console.log('patos:', this.patos.children.size)
 }
