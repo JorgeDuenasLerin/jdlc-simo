@@ -16,7 +16,8 @@ class Player  {
   }
 
   preload(){
-    this.scene.load.spritesheet('autogiro', 'assets/autogiro_sprite.png', { frameWidth: 178, frameHeight: 128 });
+    this.scene.load.spritesheet('autogiro', 'assets/autogiro_sprite.png', { frameWidth: 125, frameHeight: 88 });
+    this.scene.load.audio('sndEdificio', 'assets/lose.wav');
   }
 
   create(){
@@ -38,15 +39,17 @@ class Player  {
     this.spritePlayer.anims.play('volar');
 
     // Colisión entre helicóptero y edificios
-    this.scene.physics.add.collider(this.spritePlayer, this.scene.edificios.grupoEdificios, this.estrellado);
+    this.scene.physics.add.collider(this.spritePlayer, this.scene.edificios.grupoEdificios, this.estrellado, null, this);
+
+    // Sonido
+    this.sndEdificio = this.scene.sound.add('sndEdificio');
   }
 
   estrellado() {
-    // Contexto cambia
-    // Obtengo Singleton
-    var p = new Player();
-    p.estrellado = true;
-    console.log('estrellado');
+    // player global
+    player.estrellado = true;
+    this.sndEdificio.play();
+    console.log('edificio');
   }
 
   reset(){
