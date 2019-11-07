@@ -6,10 +6,14 @@ const URL = 'localhost';
 const socket = io.connect('http://' + URL + ':18080', { 'forceNew': true });
 
 const btnEnviar = document.getElementById('enviar');
-const btnControles = document.getElementById('control');
+const btnControles = document.querySelectorAll('#control button');
 
 btnEnviar.addEventListener('click', enviarCodigo);
-btnControles.addEventListener('click', enviarComando);
+
+btnControles[0].addEventListener('click', evt => enviarComando(evt, btnControles[0].id));
+btnControles[1].addEventListener('click', evt => enviarComando(evt, btnControles[1].id));
+btnControles[2].addEventListener('click', evt => enviarComando(evt, btnControles[2].id));
+
 document.getElementById("codigo")
     .addEventListener("keyup", function(event) {
     event.preventDefault();
@@ -75,11 +79,9 @@ function enviarCodigo(evt) {
   });
 }
 
-function enviarComando(evt) {
-  if(evt.target.tagName !== 'BUTTON') return;
-
+function enviarComando(evt, id) {
   socket.emit('comando', {
-    comando: evt.target.id,
+    comando: id,
     'id': id
   });
 }

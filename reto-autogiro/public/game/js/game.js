@@ -5,8 +5,7 @@ var config = {
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: jugabilidad.mundo.gravedad },
-            debug: true
+            gravity: { y: jugabilidad.mundo.gravedad }
         }
     },
     scene: {
@@ -44,7 +43,6 @@ var scoreText;
 
 function preload ()
 {
-    console.log(game);
     this.load.image('sky', 'assets/sky.png');
     this.load.audio('bso', 'assets/BSO.mp3',{
         mute: false,
@@ -139,7 +137,7 @@ function create ()
 function estrelladoPato() {
     player.estrellado = true;
     this.sndPato.play();
-    console.log('patomenos')
+    this.gameover.play();
 }
 
 function update ()
@@ -150,6 +148,10 @@ function update ()
     if(!audioStart && cursors.left.isDown) {
         sfx.setLoop(true);
         sfx.play();
+    }
+
+    if(!audioStart && cursors.right.isDown) {
+        sfx.stop();
     }
 
     // Mover edificios
@@ -166,6 +168,9 @@ function update ()
 }
 
 function agregarPato() {
+    // Si estamos muertos, nada de patos
+    if(player.estrellado === true) return;
+
     var pato = this.patos.get(
         Phaser.Math.Between(game.config.width + 10, game.config.width + 50),
         Phaser.Math.Between(0, game.config.height - 120));
