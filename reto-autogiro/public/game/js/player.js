@@ -49,7 +49,7 @@ class Player  {
     // player global
     player.estrellado = true;
     this.sndEdificio.play();
-    console.log('edificio');
+    this.scene.gameover.play();
   }
 
   reset(){
