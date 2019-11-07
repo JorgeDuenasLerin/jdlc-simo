@@ -116,7 +116,7 @@ function create ()
 
     // Evento para mostrar los enemigos(patos)
      this.time.addEvent({
-        delay: 2500,
+        delay: 1250,
         callback: agregarPato,
         callbackScope: this,
         loop: true
