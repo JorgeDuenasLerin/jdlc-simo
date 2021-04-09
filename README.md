@@ -8,6 +8,7 @@ Como root:
 instala git
 ```
 #  apt install git
+#  apt install npm
 ```
 
 Instalar nodejs
